@@ -13,7 +13,8 @@
 
 ### Running on my Local Machine (Existing Virtual Environment)  
 source .venv/bin/activate
-python script.py
+
+python main.py
 
 ### Running on a New Machine (Fresh Setup)
 sudo apt install python3-venv python3-full -y
@@ -46,8 +47,12 @@ pip install matplotlib
   Forward-fill missing dates with the most recent available close price, creating a **continuous daily price series**.
 
 ### Features added (thinking used)
-- **RSI** RSI > 60 => a bullish momentum is ongoing || RSI > 40 => a bearish momentum is ongoing
-- **EMA** Price > EMA Long && Price > EMA Short => Price might be good for selling || Price < EMA Long && Price < EMA Short => Price might be good for buying
+- **RSI**
+RSI > 60 => a bullish momentum is ongoing
+RSI > 40 => a bearish momentum is ongoing
+- **EMA**
+Price > EMA Long && Price > EMA Short => Price might be good for selling
+Price < EMA Long && Price < EMA Short => Price might be good for buying
 
 ### Fundamentals brief summary 2021-2024 
 (taken from finance.yahoo website Financials Tab)
