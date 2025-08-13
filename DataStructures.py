@@ -12,10 +12,15 @@ class TimePeriod(Enum):
     WEEK = timedelta(weeks=1)
     MONTH = relativedelta(months=1)
 
-# Example usage:
-print(TimePeriod.WEEK.value)   # 7 days, 0:00:00
-print(TimePeriod.MONTH.value)
-
+    def to_days(self):
+        if isinstance(self.value, timedelta):
+            return self.value.days
+        elif isinstance(self.value, relativedelta):
+            # Convert relativedelta to days by applying it to a fixed date
+            start = date(2000, 1, 1)
+            end = start + self.value
+            return (end - start).days
+            
 # May also be useful:
 # today = date.today()
 # next_week = today + TimePeriod.WEEK.value
