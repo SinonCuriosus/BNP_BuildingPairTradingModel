@@ -226,10 +226,16 @@ pip install statsmodels
 
     With a return 47% (excluding taxes and transaction costs)
 
-2. The second trial which I though we should give a trial were for 2 companies which happened of being the same sector + had the best fundamental to avoid us loosing all our money which is: goind bankrupt, because both were able to pay all it's debt in equal or less than 3 years. The companies were: ASML.AS and BESI.AS and the analysis are above in the **Fundamentals brief summary 2021-2024** part.
+2. The second trial which I though we should give a trial were for 2 companies which happened of being the same sector + had the best fundamental to avoid us loosing all our money which is: goind bankrupt, because both were able to pay all it's debt in equal or less than 3 years.
+
+    The companies were: ASML.AS and BESI.AS and the analysis are above in the **Fundamentals brief summary 2021-2024** part.
+
     The results were:
+
     2024-01-04 | BUY           ASML.AS at 636.15
+
     2024-01-04 | BUY           BESI.AS at 122.3
+    
     With a return 65% (excluding taxes and transaction costs)
 
 --
