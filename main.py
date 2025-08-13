@@ -44,12 +44,11 @@ def ema(df: pd.DataFrame, span: int) -> pd.DataFrame:
     return df.ewm(span=span, adjust=False).mean()
 
 def rsi(df: pd.DataFrame, window: int = 14) -> pd.DataFrame:
-    # Wilder's RSI (uses exponential smoothing)
     delta = df.diff()
     up = delta.clip(lower=0)
     down = -delta.clip(upper=0)
 
-    # Wilder smoothing (alpha = 1/window)
+    # smoothing (alpha = 1/window)
     roll_up = up.ewm(alpha=1/window, adjust=False).mean()
     roll_down = down.ewm(alpha=1/window, adjust=False).mean()
 
@@ -119,7 +118,7 @@ def rolling_beta_cv(y: pd.Series, x: pd.Series, window: int = 60) -> float:
 def pair_stats(prices: pd.DataFrame, a: str, b: str, use_logs: bool = True) -> dict:
     """
     Compute metrics for pair (a,b):
-      - Engle–Granger cointegration p-value (lower better)
+      - Engle–Granger p-value
       - alpha, beta
       - rolling beta CV (stability)
       - half-life (days)

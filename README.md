@@ -254,11 +254,22 @@ pip install statsmodels
 
     2. Short
 
-        Criteria: price > EMA_long AND price > EMA_short AND RSI > 50
+        Criteria: price > EMA_long AND price > EMA_short AND short_entry_rsi > 50
 
         Would consider the stock as overbought and would short it. 
 
 - Exit Signal:
+    1. Long
+
+        price > EMA_long AND price > EMA_shor AND RSI > long_exit_rsi
+
+        As long as we ensure that the entering momment was in a completely oversold condition we can be convicted of dropping it only once we detect and overbought condition. If the fundamentals are kept strong it also gives some insurances to our investors (given the companies selected in the second scenario).
+
+        2. Short 
+
+        price < EMA_long AND price < EMA_short AND RSI < short_exit_rsi=40
+        
+        My plan in shortting it's short term. If in the entry signals it already detects the stock weakening, we want to make some money by just letting a few weaker and solding after.
 
 **NOTE**
 Dangers of shorting:
@@ -277,19 +288,45 @@ Dangers of shorting:
 </p>
 
 
-
-When the price it's c
-
-- Exit Signals:
-
-
-
 2. How much would you invest in each pair?
 
-I'd use the Hedge Ratio, e.g.:
-If I had 10 000€ to invest(purely in stocks, assuming we have already optimized the missing money in Treasury Bonds) and assuming a Beta calculated in the statistics of 1.5 (when B moves 1€, A moves 1.5€ in the same direction), I'd go long to A for instance instance with 4000€ given the beta value B=1.5 * 4000€ = 6000€, having the total 10000€ invested. 
+In the first scenario: the one we needed to choose 1 pair from the combination of the 10 stocks, I'd use the Hedge Ratio.
+
+If I had 10 000€ to invest (purely in stocks, assuming we have already optimized the missing money in Treasury Bonds thorugh the Markovitz optimzed curve) and assuming a Beta calculated in the statistics of 1.5 (when B moves 1€, A moves 1.5€ in the same direction), I'd go:
+
+Long to A for instance instance with 4000€.
+
+Given the beta value B=1.5 * 4000€ = 6000€, having the total 10000€ invested, I'd invest 6000€ in the stock B. 
+
+**Explanation:**
 
 We do this to avoid overexposing ourselves to a sole stock, therefore we invest accordint to the Beta Value multiplication over the second stock from the pair given the volatility of both not being the same.
 
+In the second scenario: As we are just allowed to select a pair from the 10 stocks I'd expose my-self 50-50. Altough we could also consider other methods such as Markovitz **(although prices from the past do not ensure repetition of behaviors in the feature)**.
 
+
+### ⚠️ Challenges & Solutions  
+
+- **Challenges found in this phase:** 
+
+1. It was my first time considering shorting scenarios. I'd be more confident if we could have a bit of more Technical and Fundamental Indicators, but as it's an assessment with limited time doesn't gives me the time enough to structure how to work with each indicator. 
+
+- **Solution implemented:**  
+1. Although I did not worked with lots of indicators I tried to show proficiency in alligning the ones I used together and show off a sound strategy.
+
+
+## 5. Backtesting
+### Simulation
+
+Implemented in the "build_strategy" function under main.py
+
+### Metrics
+p_value      alpha      beta    beta_cv  half_life  cointegration_ok  beta_stable  hl_ok
+1. p_value => Stocks which correlated the best have a smaller P_Value < 1 
+2. alpha => average offset when the P_a = P_b * Beta
+3. half_life => how many periods it takes for a deviation from the mean to shrink in a mean-reverting process
+4. cointegration_ok => If 2 stocks behave the same way
+5. beta_stable => If it's stable it is considered to bring "market neutral" status
+6. hl_ok => If it's ok, usually the "half_life" description happens
+7. net return
 
