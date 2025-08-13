@@ -227,7 +227,7 @@ pip install statsmodels
 
     2024-01-04 | SELL SHORT    BN.PA at 56.80
 
-    With a return 47% (excluding taxes and transaction costs)
+    With a return 47% as of 2025-01-01(excluding taxes and transaction costs).
 
 2. The second trial which I though we should give a trial were for 2 companies which happened of being the same sector + had the best fundamental to avoid us loosing all our money which is: goind bankrupt, because both were able to pay all it's debt in equal or less than 3 years.
 
@@ -239,7 +239,7 @@ pip install statsmodels
 
     2024-01-04 | BUY           BESI.AS at 122.3
 
-    With a return 65% (excluding taxes and transaction costs)
+    With a return 65% as of 2025-01-01(excluding taxes and transaction costs).
 
 
 ## 5. Trading Strategy
