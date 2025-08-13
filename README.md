@@ -266,7 +266,7 @@ pip install statsmodels
 
         price > EMA_long AND price > EMA_shor AND RSI > long_exit_rsi
 
-        As long as we ensure that the entering momment was in a completely oversold condition we can be convicted of dropping it only once we detect and overbought condition. If the fundamentals are kept strong it also gives some insurances to our investors (given the companies selected in the second scenario).
+        As long as we ensure that the entering momment was in a completely oversold condition we can be convicted of dropping it only once we detect and overbought condition. If the fundamentals are kept strong it also gives some insurances to our investors (given the companies selected in the second model- the one that integrated Fundamental Analysis).
 
         2. Short 
 
@@ -305,7 +305,7 @@ Given the beta value B=1.5 * 4000€ = 6000€, having the total 10000€ invest
 
 We do this to avoid overexposing ourselves to a sole stock, therefore we invest accordint to the Beta Value multiplication over the second stock from the pair given the volatility of both not being the same.
 
-In the second scenario: As we are just allowed to select a pair from the 10 stocks I'd expose my-self 50-50. Altough we could also consider other methods such as Markovitz **(although prices from the past do not ensure repetition of behaviors in the feature)**.
+In the second model (the one which integrated fundamentals): As we are just allowed to select a pair from the 10 stocks I'd expose my-self 50-50. Altough we could also consider other methods such as Markovitz **(although prices from the past do not ensure repetition of behaviors in the feature)**.
 
 
 ### ⚠️ Challenges & Solutions  
