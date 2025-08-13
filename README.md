@@ -48,10 +48,14 @@ pip install matplotlib
 
 ### Features added (thinking used)
 - **RSI**
+
 RSI > 60 => a bullish momentum is ongoing
+
 RSI > 40 => a bearish momentum is ongoing
 - **EMA**
+
 Price > EMA Long && Price > EMA Short => Price might be good for selling
+
 Price < EMA Long && Price < EMA Short => Price might be good for buying
 
 ### Fundamentals brief summary 2021-2024 
