@@ -195,16 +195,16 @@ pip install statsmodels
 - Measures used:
     1. Engle–Granger cointegration p-value:
 
-    In pairs trading, we want pairs that move together in the long run so that their spread is mean-reverting. Therefore we want this value to be the lowest possible to reject no cointegration.
+        In pairs trading, we want pairs that move together in the long run so that their spread is mean-reverting. Therefore we want this value to be the lowest possible to reject no cointegration.
 
 
     2.  Alpha e Beta:
-   \[
-   \beta = \frac{\mathrm{Cov}(P_a, P_b)}{\mathrm{Var}(P_b)}, \quad
-   \alpha = \bar{P_a} - \beta \bar{P_b}
-   \]
-   Example of each:
-   If Beta = 1.5 => historically, when P_b moves 1€, P_a moves 1.50€ in the same direction.
+        \[
+        \beta = \frac{\mathrm{Cov}(P_a, P_b)}{\mathrm{Var}(P_b)}, \quad
+        \alpha = \bar{P_a} - \beta \bar{P_b}
+        \]
+        Example of each:
+        If Beta = 1.5 => historically, when P_b moves 1€, P_a moves 1.50€ in the same direction.
 
 ### ⚠️ Challenges & Solutions  
 
