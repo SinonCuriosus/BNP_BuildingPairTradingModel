@@ -58,6 +58,8 @@ Price > EMA Long && Price > EMA Short => Price might be good for selling
 
 Price < EMA Long && Price < EMA Short => Price might be good for buying
 
+**EMA was choosen agains't SMA** because it reacts faster to current changes.
+
 ### Fundamentals brief summary 2021-2024 
 (taken from finance.yahoo website Financials Tab)
 - **ASML.AS (2021–2024):**
