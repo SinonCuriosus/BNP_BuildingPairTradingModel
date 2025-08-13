@@ -32,11 +32,11 @@ pip install matplotlib
 ## 2/3. Data Collection and preprocessing
 - **Source:** yfinance lib
 - **Stocks to consider:**
-[
-    "ASML.AS", "BESI.AS", "IFX.DE", "HSBA.L", 
-    "INGA.AS", "ISP.MI", "ABI.BR", "RI.PA", 
-    "BN.PA", "TSCO.L"
-]
+    [
+        "ASML.AS", "BESI.AS", "IFX.DE", "HSBA.L", 
+        "INGA.AS", "ISP.MI", "ABI.BR", "RI.PA", 
+        "BN.PA", "TSCO.L"
+    ]
 
 ### ⚠️ Challenges & Solutions  
 
@@ -49,16 +49,16 @@ pip install matplotlib
 ### Features added (thinking used)
 - **RSI**
 
-RSI > 60 => a bullish momentum is ongoing
+    RSI > 60 => a bullish momentum is ongoing
 
-RSI > 40 => a bearish momentum is ongoing
+    RSI > 40 => a bearish momentum is ongoing
 - **EMA**
 
-Price > EMA Long && Price > EMA Short => Price might be good for selling
+    Price > EMA Long && Price > EMA Short => Price might be good for selling
 
-Price < EMA Long && Price < EMA Short => Price might be good for buying
+    Price < EMA Long && Price < EMA Short => Price might be good for buying
 
-**EMA was choosen agains't SMA** because it reacts faster to current changes.
+    **EMA was choosen agains't SMA** because it reacts faster to current changes.
 
 ### Fundamentals brief summary 2021-2024 
 (taken from finance.yahoo website Financials Tab)
