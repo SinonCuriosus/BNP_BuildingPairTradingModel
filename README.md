@@ -101,7 +101,7 @@ pip install matplotlib
     - If a company repurchases stocks it reduces their supply to the market. Therefore if the demand remains steady or increases the stock naturally will increase on price
 
 2. Long-Term debt
-    - he first, second, and third rule in investing is to never lose money.
+    - The first, second, and third rule in investing is to never lose money.
     - We must remain mindful of macroeconomic scenarios that could push businesses toward bankruptcy. 
     - Bankruptcy often stems from a company’s inability to service its debt. If a company can repay its debt using its net earnings within 2-4 years (there's no fixed number here, but it should be a small number ofc), that is generally a reasonable timeframe, as it allows them to better navigate periods of macroeconomic uncertainty.
 
