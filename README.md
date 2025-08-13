@@ -238,16 +238,37 @@ pip install statsmodels
 
     With a return 65% (excluding taxes and transaction costs)
 
---
-
-
 
 ## 5. Trading Strategy
 ### Risk Management
-1. Entry and Exit Signal of Each Pair
+#### Risk Management
+- Entry Signal:
 
-2024-01-04 | BUY           ASML.AS at 636.15
-2024-01-04 | SELL SHORT    BN.PA at 56.80
+1. Long
+
+Asumming the 3 companies have stable financials although solely 1 showed to be strong in strong in earnings (ASML.SA vs BESI.SA and BN.PA), we have used 2 EMA curves. One to analyse monthly stock behavior and other to analyse weekly stock behavior.
+
+Given the first phrase we assumed that we solely assumed **potencial entry points** in a stock once it's Price < EMA_short AND Price < EMA_long.
+They would be **effective entry points** if the RSI would detect an oversold condition of those stocks bellow 30 within the last 40 days.
+
+2. Short
+
+price > EMA_long AND price > EMA_short AND RSI > 50
+Would consider the stock as overbought and would short it. 
+
+**NOTE**
+I do not like to short because:
+1. It potentially and theoretically may bring infinite losses.
+2. THe gains are theoretically limited to the price of the stock.
+![Short behavior described](short_explanation.png)
+![Short example](short_explanation_example.png)
+
+
+When the price it's c
+
+- Exit Signals:
+
+
 
 2. How much would you invest in each pair?
 
