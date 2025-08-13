@@ -189,7 +189,7 @@ pip install statsmodels
   **Note:**
   We could and should do a lot more analysis in the missing fundamental variables but I guess **this already shows up some analytical skills given Fundamental Analysis** which is not asked in the assessment but if I could choose I'd partially integrate it in the work as it has analytical value.
 
---
+
 
 ## 4. Statistical Analysis
 - Measures used:
@@ -235,7 +235,7 @@ pip install statsmodels
     2024-01-04 | BUY           ASML.AS at 636.15
 
     2024-01-04 | BUY           BESI.AS at 122.3
-    
+
     With a return 65% (excluding taxes and transaction costs)
 
 --
