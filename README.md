@@ -212,7 +212,7 @@ pip install statsmodels
 
 1. THe pair trading aims to do Heding acheiving a kind of "market neutral" status. If the Beta is not considered to be stable it's useless because might still be exposed to market direction or sector trends.
 
-2. Strangely I was expecting to get a stocks from the same industry correlated... But instead the one which scored the most were ASML which is from the Semiconductors industry and Danone (Package Foods).
+2. Strangely I was expecting to get a stocks from the same industry correlated... But instead the pair of stocks which scored the biggest value were ASML which is from the Semiconductors industry and Danone (Package Foods).
 - **Solution implemented:**  
   I've built 2 models with different enterprises. T
 
