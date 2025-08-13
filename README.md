@@ -102,24 +102,24 @@ pip install statsmodels
 - **HSBA.L (2021–2024):**
   - **Net Income CAGR:**
 
-  Approximately +21.80 % per annum
+    Approximately +21.80 % per annum
   - **Share Repurchases:**
 
-  AVG of 12.88% and STD of 4.79%, of gross profit invested in NET repurchased programs (22.73, 16.19, 8.63, 4.95)
+    AVG of 12.88% and STD of 4.79%, of gross profit invested in NET repurchased programs (22.73, 16.19, 8.63, 4.95)
   - **Long-Term Debt:**
 
-  2021: 17.73, 2022: 14.24, 2023: 10.48, 2024: 10.58 (total debt/net income), pays off all its long term debt in approximately 22 operating years in the worst scenario.
+    2021: 17.73, 2022: 14.24, 2023: 10.48, 2024: 10.58 (total debt/net income), pays off all its long term debt in approximately 22 operating years in the worst scenario.
 
 - **INGA.AS (2021–2024):** Excluded due Long-Term Debt exposure
   - **Net Income CAGR:**
 
-  Approximately +10.16 % per annum
+    Approximately +10.16 % per annum
   - **Share Repurchases:**
   
-  0.00% and STD of 0.00%, of revenue invested in NET repurchased programs (0.00, 0.00, 0.00, 0.00)
+    0.00% and STD of 0.00%, of revenue invested in NET repurchased programs (0.00, 0.00, 0.00, 0.00)
   - **Long-Term Debt:**
 
-  2021: 24.30, 2022: 32.53, 2023: 20.58, 2024: 26.80 (total debt/net income), pays off all its long term debt in not less than 20 years in the worst scenario
+    2021: 24.30, 2022: 32.53, 2023: 20.58, 2024: 26.80 (total debt/net income), pays off all its long term debt in not less than 20 years in the worst scenario
 
 - **ISP.MI (2021–2024):**
   - **Net Income CAGR:**
@@ -199,12 +199,15 @@ pip install statsmodels
 
 
     2.  Alpha e Beta:
-        \[
-        \beta = \frac{\mathrm{Cov}(P_a, P_b)}{\mathrm{Var}(P_b)}, \quad
-        \alpha = \bar{P_a} - \beta \bar{P_b}
-        \]
+        
+        Beta:
         Example of each:
         If Beta = 1.5 => historically, when P_b moves 1€, P_a moves 1.50€ in the same direction.
+        It also tells us how much more volatile the stock is.
+
+
+        Alpha:
+        Alpha => average offset when the P_a = P_b * Beta
 
 ### ⚠️ Challenges & Solutions  
 
