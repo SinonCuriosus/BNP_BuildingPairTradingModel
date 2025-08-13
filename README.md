@@ -19,8 +19,11 @@ python script.py
 sudo apt install python3-venv python3-full -y
 python3 -m venv .venv
 source .venv/bin/activate
+
 pip install --upgrade pip
+
 pip install yfinance
+
 pip install matplotlib
 
 ---
