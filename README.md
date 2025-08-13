@@ -267,7 +267,7 @@ I do not like to short because:
 </p>
 
 <p align="center">
-  <img src="images/short_explanation_example.png)" alt="Trading Strategy Chart" width="500">
+  <img src="images/short_explanation_example.png" alt="Trading Strategy Chart" width="500">
   <br>
   <em>Figure 2 – Shorting example</em>
 </p>
