@@ -95,6 +95,13 @@ pip install matplotlib
 
     2021: 6.05, 2022: 2.81, 2023: 1.65, 2024: 4.06 (total debt/net income), pays off all its long term debt in approximately 6.05 operating years in the worst scenario
 
+**Why did I use these 3 indicators and not other ones?**
+1. Net Income growth analysis and Share Repurchases influence highly the potencial price of share, respectively, because:
+-    1.1. If the net income increases, naturally the price of the shares also increase if the they are not overvalued
+     1.2. If a company repurchases stocks it reduces their supply to the market. Therefore if the demand remains steady or increases the stock naturally will increase on price
+     
+2. Long-Term debt, the first, second, and third rule in investing is to never lose money. We must remain mindful of macroeconomic scenarios that could push businesses toward bankruptcy. Bankruptcy often stems from a company’s inability to service its debt. If a company can repay its debt using its net earnings within 2-4 years (there's no fixed number here, but it should be a small number ofc), that is generally a reasonable timeframe, as it allows them to better navigate periods of macroeconomic uncertainty.
+
   **Note:**
   We could do the same for the rest but I guess **this already shows up some analytical skills given Fundamental Analysis** which is not asked in the assessment but if I could choose I'd partially integrate it in the work.
 
