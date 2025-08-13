@@ -68,7 +68,7 @@ pip install matplotlib
     Approximately +6.5 % per annum
   - **Share Repurchases:**
 
-    35.295% and STD of 33.87%, of gross profit invested in NET repurchased programs (3.45, 7.08, 43.38, 87.27)
+    AVG of 35.295% and STD of 33.87%, of gross profit invested in NET repurchased programs (3.45, 7.08, 43.38, 87.27)
   - **Long-Term Debt:**
 
     2021: 0.77, 0.75.,  0.59, 2024: 0.61 (total debt/net income), pays off all its long term debt in a single operating year
@@ -79,7 +79,7 @@ pip install matplotlib
     Approximately -14.1 % per annum
   - **Share Repurchases:**
 
-    30.32% and STD of 17.65%, of gross profit invested in NET repurchased programs (20.17, 56.77, 33.13, 11.21)
+    AVG of 30.32% and STD of 17.65%, of gross profit invested in NET repurchased programs (20.17, 56.77, 33.13, 11.21)
   - **Long-Term Debt:**
   
     2021: 1.11, 2022: 1.42, 2023: 1.80, 2024: 3.00 (total debt/net income), pays off all its long term debt in approximately 3.08 operating years in the worst scenario
@@ -90,7 +90,7 @@ pip install matplotlib
     Approximately +3.63 % per annum
   - **Share Repurchases:**
 
-    0.96% and STD of 1.66%, of gross profit invested in NET repurchased programs (3.84, 0.00, 0.00, 0.00)
+    AVG of 0.96% and STD of 1.66%, of gross profit invested in NET repurchased programs (3.84, 0.00, 0.00, 0.00)
   - **Long-Term Debt:**
 
     2021: 6.05, 2022: 2.81, 2023: 1.65, 2024: 4.06 (total debt/net income), pays off all its long term debt in approximately 6.05 operating years in the worst scenario
