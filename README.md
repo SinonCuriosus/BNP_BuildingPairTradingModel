@@ -260,8 +260,18 @@ Would consider the stock as overbought and would short it.
 I do not like to short because:
 1. It potentially and theoretically may bring infinite losses.
 2. THe gains are theoretically limited to the price of the stock.
-![Short behavior described](short_explanation.png)
-![Short example](short_explanation_example.png)
+<p align="center">
+  <img src="images/short_explanation.png" alt="Trading Strategy Chart" width="500">
+  <br>
+  <em>Figure 1 – Short behavior function</em>
+</p>
+
+<p align="center">
+  <img src="images/short_explanation_example.png)" alt="Trading Strategy Chart" width="500">
+  <br>
+  <em>Figure 2 – Shorting example</em>
+</p>
+
 
 
 When the price it's c
