@@ -96,19 +96,20 @@ Top Losers
 ## Strategy in 60 seconds
 
 1. **Hedge ratio (β):** OLS of A on B.  
-2. **Spread:** \( s_t = A_t - β B_t \).  
-3. **Z-score:** \( z_t = (s_t - \mu)/\sigma \) (rolling or full-sample).  
+2. **Spread:** `s_t = A_t - β B_t`  
+3. **Z-score:** `z_t = (s_t - μ)/σ` (rolling or full-sample).  
 4. **Enter:**  
-   - \( z \ge +\text{entry\_z} \) ⇒ **short A / long B**  
-   - \( z \le -\text{entry\_z} \) ⇒ **long A / short B**  
-5. **Exit:** when \( |z| \le \text{exit\_z} \) (**hysteresis** to reduce whipsaw).  
+   - `z ≥ +entry_z` ⇒ **short A / long B**  
+   - `z ≤ -entry_z` ⇒ **long A / short B**  
+5. **Exit:** when `|z| ≤ exit_z` (**hysteresis** to reduce whipsaw).  
 6. **Risk:** per-trade **stop-loss**, **take-profit**, optional **time stop**.  
-7. **PnL:** \( \text{pos} \times (r_A - β r_B) - \text{costs} \). Each position change costs **2 legs**; a flip costs **4**. Default **5 bps/leg**.
+7. **PnL:** `pos × (r_A - β r_B) - costs`. Each position change costs **2 legs**; a flip costs **4**. Default **5 bps/leg**.
 
 **Why it can work:** Cointegration suggests long-run linkage with **mean reversion**. Half-lives in **single-digit weeks** fit the horizon. Hysteresis cuts noise; costs/stops keep it realistic.
 
 
 ## Project layout
+<pre>
 BNP_BuildingPairTradingModel/
 ├─ analysis/                      # pair selection & stats (cointegration, ranking, tuning)
 ├─ data/                          # local cache (prices/meta) → ignored in git
@@ -133,3 +134,4 @@ BNP_BuildingPairTradingModel/
 ├─ DataStructures.py              # Enterprise + TimePeriod + yfinance caching
 ├─ main.py                        # wiring: load → rank → tune → backtest → report
 └─ README.md
+</pre>
