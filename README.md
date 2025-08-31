@@ -42,14 +42,18 @@ Mean-reversion **pairs trading** in equities with a clean OOP layout, **cointegr
 | 2.9     | 0.9    | 0.0           | 0.50            | 30       | True          | 0.178701 | 599.536235     |  8.713860      | 58     | 0.178701 |
 
 **Backtest summary (2023-01-01 to 2025-01-01):**
+
 With:
+
 | Parameter       | Value |
 |-----------------|-------|
 | entry_z         | 2.4   |
 | exit_z          | 0.85  |
 | stop_loss_pct   | 0.05  |
 | take_profit_pct | 0.45  |
+
 Results:
+
 | Metric                | Value      |
 |------------------------|------------|
 | n_days                | 730        |
