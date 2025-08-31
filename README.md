@@ -125,7 +125,7 @@ BNP_BuildingPairTradingModel/
 │  └─ rsi.py
 ├─ models/
 │  ├─ hedge.py                    # hedging
-│  └─ stats.py                    # auxiliary functions used in models
+│  └─ stats.py                    # auxiliary functions
 ├─ strategies/                    # strategy interfaces & implementations
 │  ├─ base.py                     # abstract Strategy
 │  ├─ ema_rsi.py                  # EMA/RSI cross (separate from pairs)
