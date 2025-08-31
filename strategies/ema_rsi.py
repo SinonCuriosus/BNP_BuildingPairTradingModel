@@ -29,7 +29,7 @@ class EmaRsiStrategy(Strategy):
         rsi_v = RSI(self.rsi_window).compute(prices)
         return {"ema_short": ema_s, "ema_long": ema_l, "rsi": rsi_v}
 
-    def make_signals(self, prices: pd.DataFrame, ind):
+    def make_signals(self, prices: pd.DataFrame, ind): 
         ema_s, ema_l, rsi = ind["ema_short"], ind["ema_long"], ind["rsi"]
         long_entry = (prices < ema_l) & (prices < ema_s) & (rsi < self.long_entry_rsi)
         long_exit  = (prices > ema_l) & (prices > ema_s) & (rsi > self.long_exit_rsi)
