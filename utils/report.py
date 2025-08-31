@@ -3,7 +3,6 @@ import pandas as pd
 import numpy as np
 import itertools
 
-
 def build_trade_table(
     positions: pd.Series,        # +1 long s1/short s2, -1 short s1/long s2, 0 flat
     prices: pd.DataFrame,        # columns [s1, s2]
@@ -66,6 +65,45 @@ def print_trade_table(df: pd.DataFrame, max_rows: int = 30) -> None:
     if len(show) > max_rows:
         print(f"... ({len(show) - max_rows} more)")
 
+
+def summarize_extreme_trades(
+    trades: pd.DataFrame,
+    k: int = 3,
+    out_dir: Optional[str | Path] = None,
+) -> Dict[str, pd.DataFrame]:
+    """
+    From a trade table (as built by build_trade_table), extract the top-k winners
+    and top-k losers by net_return_%.
+
+    Returns a dict with:
+      - 'top_gains': DataFrame with columns [start, end, days, side, net_return_%]
+      - 'top_losses': same columns, lowest net_return_% first
+
+    If out_dir is provided, also saves:
+      out_dir/top_gains.csv and out_dir/top_losses.csv
+    """
+    required = {"start", "end", "days", "side", "net_return_%"}
+    missing = required - set(trades.columns)
+    if missing:
+        raise ValueError(f"trades is missing columns: {sorted(missing)}")
+
+    if trades.empty:
+        empty = pd.DataFrame(columns=["start","end","days","side","net_return_%"])
+        return {"top_gains": empty, "top_losses": empty}
+
+    k = min(int(k), len(trades))
+    cols = ["start", "end", "days", "side", "net_return_%"]
+
+    top_gains = trades.nlargest(k, "net_return_%")[cols].reset_index(drop=True)
+    top_losses = trades.nsmallest(k, "net_return_%")[cols].reset_index(drop=True)
+
+    if out_dir is not None:
+        out_dir = Path(out_dir)
+        out_dir.mkdir(parents=True, exist_ok=True)
+        top_gains.to_csv(out_dir / "top_gains.csv", index=False)
+        top_losses.to_csv(out_dir / "top_losses.csv", index=False)
+
+    return {"top_gains": top_gains, "top_losses": top_losses}
 
 def grid_search_pairs_params(
     prices: pd.DataFrame,

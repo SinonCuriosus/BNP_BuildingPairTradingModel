@@ -6,12 +6,10 @@ import pandas as pd
 
 from strategies.ema_rsi import EmaRsiStrategy
 from strategies.zscore_only import PairsZScoreOnlyStrategy
-from strategies.ema_zscore import EmaZScorePair
-
 
 from utils.io import prep_prices, fetch_close_prices
 from utils.helpers import extract_pair
-from utils.report import build_trade_table, print_trade_table, grid_search_pairs_params
+from utils.report import build_trade_table, print_trade_table, grid_search_pairs_params, summarize_extreme_trades
 from utils.plotting import plot_positions_with_z
 
 # ----------------- CONFIG -----------------
@@ -44,12 +42,13 @@ if __name__ == "__main__":
     print(f"\nSelected top pair (trained on < {TEST_START}): {s1} / {s2}")
     pair_prices_test = test_prices[[s1,s2]]
 
-    #s1, s2 = ("ASML.AS","BESI.AS")
+    # Hardcode enterprises to skip compute time: comment above, uncomment below.
+    # s1, s2 = ("ASML.AS","BESI.AS")
     # pair_prices_test = test_prices[["ASML.AS","BESI.AS"]]
 
     # -------- 4) BACKTEST ON TEST --------
 
-    # Strategy delivered in 1st Assessment (re-structured)
+    # 1st Assessment Delivery (re-structured)
     # strat = EmaRsiStrategy(
     #     ema_short=TimePeriod.WEEK.to_days(),
     #     ema_long=TimePeriod.MONTH.to_days(),
@@ -62,8 +61,6 @@ if __name__ == "__main__":
     # cum = (1 + res["portfolio_ew_returns"]).cumprod()
     # print(cum.tail())
 
-    
-    
     strat = PairsZScoreOnlyStrategy(
         stock1=s1, stock2=s2,
         entry_z=2.4, exit_z=0.85, # 3.0 and 0.5 not that good in case in the interview we want to compare
@@ -111,6 +108,9 @@ if __name__ == "__main__":
 
     print(f"\nTrade periods ({TEST_START}, {TEST_END}):")
     print_trade_table(trades)
+    extremes = summarize_extreme_trades(trades, k=3, out_dir=None)  # or set a folder path
+    print(extremes["top_gains"])
+    print(extremes["top_losses"])
 
     plot_positions_with_z(
         prices=pair_prices_test,

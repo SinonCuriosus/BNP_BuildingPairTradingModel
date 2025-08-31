@@ -1,335 +1,127 @@
 # BNP_BuildingPairTradingModel
 
-## 📌 Business Case  
-**Objective:** Build a Pair Trading Model to identify and exploit pricing dislocations between two correlated stocks.  
-
-**Strategy:**  
-- Long one stock and short the other based on **daily close prices**.  
-- **Time horizon:** Medium to long term (1 week to 1 month).  
+Mean-reversion **pairs trading** in equities with a clean OOP layout, **cointegration-based** pair selection, a **z-score spread** strategy, realistic **transaction costs**, and **stop-based** risk controls. Includes simple grid/greedy parameter tuning.
 
 ---
 
-## ⚙️ Setup  
+## TL;DR (current features)
 
-### Running on my Local Machine (Existing Virtual Environment)  
-source .venv/bin/activate
-
-python main.py
-
-### Running on a New Machine (Fresh Setup)
-sudo apt install python3-venv python3-full -y
-python3 -m venv .venv
-source .venv/bin/activate
-
-pip install --upgrade pip
-
-pip install yfinance
-
-pip install matplotlib
-
-pip install statsmodels
+- **Pair selection:** Engle–Granger cointegration, OLS hedge ratio (β), half-life, β-stability; rank candidates.
+- **Strategy (current):** **Z-score** entry/exit (no EMA gate yet).
+- **Risk:** **stop-loss**, **take-profit**, optional **time stop**, **transaction costs** (default **5 bps per leg**).
+- **Backtest stats:** daily & annual **Sharpe**, **max drawdown**, closed-trade win rate, avg/std trade return, top 3 wins/losses.
 
 ---
 
-## 2/3. Data Collection and preprocessing
-- **Source:** yfinance lib
-- **Stocks to consider:**
-    [
-        "ASML.AS", "BESI.AS", "IFX.DE", "HSBA.L", 
-        "INGA.AS", "ISP.MI", "ABI.BR", "RI.PA", 
-        "BN.PA", "TSCO.L"
-    ]
-
-### Features added (thinking used)
-- **RSI**
-
-    RSI > 60 => a strong buy momentum is ongoing
-
-    RSI < 40 => a strong sell momentum is ongoing
-
-- **EMA**
-
-    Price > EMA Long && Price > EMA Short => Price might be good for selling
-
-    Price < EMA Long && Price < EMA Short => Price might be good for buying
-
-    **EMA was choosen agains't SMA** because it reacts faster to current changes.
-
-### ⚠️ Challenges & Solutions  
-
-- **Challenges found in this phase:**  
-  Missing daily close prices for some tickers → prevents normalized comparisons.  
-
-- **Solution implemented:**  
-  Forward-fill missing dates with the most recent available close price, creating a **continuous daily price series**.
-
-
-### Fundamentals brief summary 2021-2024 
-(taken from finance.yahoo website Financials Tab)
-- **ASML.AS (2021–2024):**
-  - **Net Income CAGR:**
-
-    Approximately +6.5 % per annum
-  - **Share Repurchases:**
-
-    AVG of 35.295% and STD of 33.87%, of gross profit invested in NET repurchased programs (3.45, 7.08, 43.38, 87.27)
-  - **Long-Term Debt:**
-
-    2021: 0.77, 0.75.,  0.59, 2024: 0.61 (total debt/net income), pays off all its long term debt in a single operating year
-
-- **BESI.AS (2021–2024):** 
-  - **Net Income CAGR:**
-
-    Approximately -14.1 % per annum
-  - **Share Repurchases:**
-
-    AVG of 30.32% and STD of 17.65%, of gross profit invested in NET repurchased programs (20.17, 56.77, 33.13, 11.21)
-  - **Long-Term Debt:**
-  
-    2021: 1.11, 2022: 1.42, 2023: 1.80, 2024: 3.00 (total debt/net income), pays off all its long term debt in approximately 3 operating years in the worst scenario
-
-- **IFX.DE (2021–2024):**
-  - **Net Income CAGR:**
-
-    Approximately +3.63 % per annum
-  - **Share Repurchases:**
-
-    AVG of 0.96% and STD of 1.66%, of gross profit invested in NET repurchased programs (3.84, 0.00, 0.00, 0.00)
-  - **Long-Term Debt:**
-
-    2021: 6.05, 2022: 2.81, 2023: 1.65, 2024: 4.06 (total debt/net income), pays off all its long term debt in approximately 6 operating years in the worst scenario
-
-- **HSBA.L (2021–2024):**
-  - **Net Income CAGR:**
-
-    Approximately +21.80 % per annum
-  - **Share Repurchases:**
-
-    AVG of 12.88% and STD of 4.79%, of gross profit invested in NET repurchased programs (22.73, 16.19, 8.63, 4.95)
-  - **Long-Term Debt:**
-
-    2021: 17.73, 2022: 14.24, 2023: 10.48, 2024: 10.58 (total debt/net income), pays off all its long term debt in approximately 22 operating years in the worst scenario.
-
-- **INGA.AS (2021–2024):** Excluded due Long-Term Debt exposure
-  - **Net Income CAGR:**
-
-    Approximately +10.16 % per annum
-  - **Share Repurchases:**
-  
-    0.00% and STD of 0.00%, of revenue invested in NET repurchased programs (0.00, 0.00, 0.00, 0.00)
-  - **Long-Term Debt:**
-
-    2021: 24.30, 2022: 32.53, 2023: 20.58, 2024: 26.80 (total debt/net income), pays off all its long term debt in not less than 20 years in the worst scenario
-
-- **ISP.MI (2021–2024):**
-  - **Net Income CAGR:**
-
-    Approximately +28.0 % per annum
-  - **Share Repurchases:**
-
-    AVG of 2.42% and STD of 0.93%, of gross profit invested in NET repurchased programs (1.71, 2.35, 3.20, 2.42)
-  - **Long-Term Debt:**
-
-    2021: 24.17, 2022: 15.76, 2023: 18.39, 2024: 16.07 (total debt/net income), pays off all its long term debt in not less than 15 years in the worst scenario
-
-- **ABI.BR (2021–2024):**
-  - **Net Income CAGR:**
-
-    Approximately +7.9 % per annum
-  - **Share Repurchases:**
-
-    AVG of 5.74% and STD of 5.39%, of gross profit invested in NET repurchased programs (0, 0, 1.15, 9.46)
-  - **Long-Term Debt:**
-
-    2021: 12.29, 11.53, 13.36, 2024: 10.15 (total debt/net income), requires over 10 operating years to pay off in the worst scenario
-
-- **RI.PA (2021–2024):**
-  - **Net Income CAGR:**
-    
-    Approximately +4.2% per annum
-  - **Share Repurchases:**
-    
-    AVG of 4.57% and STD of 2.45%, of gross profit invested in NET repurchased programs (0.00, 5.18, 6.65, 6.45)
-  - **Long-Term Debt:**
-    
-    2021: 7.35, 2022: 5.60, 2023: 5.24, 2024: 9.22 (total debt/net income), pays its debt in 9 years inn the worst case scenario
-
-- **BN.PA (2021–2024):**
-  - **Net Income CAGR:**
-  
-    Approximately -8.6% per annum
-  - **Share Repurchases:**
-  
-    AVG of 1.53% and STD of 3.05%, of gross profit invested in NET repurchased programs (7.09, 0, 0, -2.57)
-  - **Long-Term Debt:**
-  
-    2021: 8.54, 7.46, 6.03, 2024: 4.04 (total debt/net income), pays its debt in 9 years in the worst case scenario
-
-- **TSCO.L (2022–2025):**
-  - **Net Income CAGR:**
-
-    Approximately –6.9 % per annum
-  - **Share Repurchases:**
-
-    AVG of 8.15 % and STD of 4.04 %, of gross profit invested in net repurchase programs (8.94, 6.46, 8.69, 8.52)
-  - **Long-Term Debt:**
-
-    2022: 15.36, 15.08, 14.84, 2025: 14.67 (total debt/net income), requiring approximately 9 years of current net income to pay off all long-term debt in the worst-case scenario
-
-**Why did I use these 3 indicators and not other ones?**
-1. Net Income growth analysis and Share Repurchases influence highly the potencial price of share, respectively, because:
-    - If the net income increases, naturally the price of the shares also increase if the they are not overvalued
-    - If a company repurchases stocks it reduces their supply to the market. Therefore if the demand remains steady or increases the stock naturally will increase on price
-
-2. Long-Term debt
-    - The first, second, and third rule in investing is to never lose money.
-    - We must remain mindful of macroeconomic scenarios that could push businesses toward bankruptcy. 
-    - Bankruptcy often stems from a company’s inability to service its debt. If a company can repay its debt using its net earnings within 2-4 years (there's no fixed number here, but it should be a small number ofc), that is generally a reasonable timeframe, as it allows them to better navigate periods of macroeconomic uncertainty.
-
-  **Note:**
-  We could and should do a lot more analysis in the missing fundamental variables but I guess **this already shows up some analytical skills given Fundamental Analysis** which is not asked in the assessment but if I could choose I'd partially integrate it in the work as it has analytical value.
-
-
-
-## 4. Statistical Analysis
-- Measures used:
-    1. Engle–Granger cointegration p-value:
-
-        In pairs trading, we want pairs that move together in the long run so that their spread is mean-reverting. Therefore we want this value to be the lowest possible to reject no cointegration.
-
-
-    2.  Alpha e Beta:
-        
-        Beta:
-        Example of each:
-        If Beta = 1.5 => historically, when P_b moves 1€, P_a moves 1.50€ in the same direction.
-        It also tells us how much more volatile the stock is.
-
-
-        Alpha:
-        Alpha => average offset when the P_a = P_b * Beta
-
-### ⚠️ Challenges & Solutions  
-
-- **Challenges found in this phase:** 
-
-1. THe pair trading aims to do Heding acheiving a kind of "market neutral" status. If the Beta is not considered to be stable it's useless because might still be exposed to market direction or sector trends.
-
-2. Strangely I was expecting to get a stocks from the same industry correlated... But instead the pair of stocks which scored the biggest value were ASML which is from the Semiconductors industry and Danone (Package Foods).
-- **Solution implemented:**  
-  I've built 2 models with different enterprises. T
-
-1. The rationale was: Although I have got the beta unstable...
-  Let's follow the assessment request and give a trial with the stocks which correlated the best P_value = 0.031822.
-  After finetunning the model with EMA + RSI it gave:
-
-    2024-01-04 | BUY           ASML.AS at 636.15
-
-    2024-01-04 | SELL SHORT    BN.PA at 56.80
-
-    With a return 47% as of 2025-01-01(excluding taxes and transaction costs).
-
-2. The second trial which I though we should give a trial were for 2 companies which happened of being the same sector + had the best fundamental to avoid us loosing all our money which is: goind bankrupt, because both were able to pay all it's debt in equal or less than 3 years.
-
-    The companies were: ASML.AS and BESI.AS and the analysis are above in the **Fundamentals brief summary 2021-2024** part.
-
-    The results were:
-
-    2024-01-04 | BUY           ASML.AS at 636.15
-
-    2024-01-04 | BUY           BESI.AS at 122.3
-
-    With a return 65% as of 2025-01-01(excluding taxes and transaction costs).
-
-
-## 5. Trading Strategy
-### Risk Management
-#### Risk Management
-- Entry Signal:
-
-    1. Long
-
-        Asumming the 3 companies have stable financials although solely 1 showed to be strong in strong in earnings (ASML.SA vs BESI.SA and BN.PA), we have used 2 EMA curves. One to analyse monthly stock behavior and other to analyse weekly stock behavior.
-
-        Given the first phrase we assumed that we solely assumed **potencial entry points** in a stock once it's Price < EMA_short AND Price < EMA_long.
-
-        They would be **effective entry points** if the RSI would detect an oversold condition of those stocks bellow 30 within the last 40 days.
-
-    2. Short
-
-        Criteria: price > EMA_long AND price > EMA_short AND short_entry_rsi > 50
-
-        Would consider the stock as overbought and would short it. 
-
-- Exit Signal:
-    1. Long
-
-        price > EMA_long AND price > EMA_shor AND RSI > long_exit_rsi
-
-        As long as we ensure that the entering momment was in a completely oversold condition we can be convicted of dropping it only once we detect and overbought condition. If the fundamentals are kept strong it also gives some insurances to our investors (given the companies selected in the second model- the one that integrated Fundamental Analysis).
-
-        2. Short 
-
-        price < EMA_long AND price < EMA_short AND RSI < short_exit_rsi=40
-        
-        My plan in shortting it's short term. If in the entry signals it already detects the stock weakening, we want to make some money by just letting a few weaker and solding after.
-
-**NOTE**
-Dangers of shorting:
-1. It potentially and theoretically may bring infinite losses.
-2. THe gains are theoretically limited to the price of the stock.
-<p align="center">
-  <img src="images/short_explanation.png" alt="Trading Strategy Chart" width="500">
-  <br>
-  <em>Figure 1 – Short behavior function</em>
-</p>
+## Results (example run)
+
+**Top-ranked pairs (train period):**
+| pair          | n_obs | p_value       | alpha     | beta    | beta_cv | half_life | cointegration_ok | beta_stable | hl_ok | score |
+|---------------|-------|---------------|-----------|---------|---------|-----------|------------------|-------------|-------|-------|
+| ASML.AS/RI.PA | 1096  | 6.047576e-12  | -3.987571 | 2.008979| 1.453706| 8.392971  | True             | False       | True  | 2     |
+| ASML.AS/BESI.AS | 1096| 2.561226e-09  | 2.286047  | 0.988719| 0.508977| 12.366520 | True             | False       | True  | 2     |
+| BESI.AS/IFX.DE | 1096 | 4.356609e-08  | 0.159831  | 1.118406| 0.604092| 13.602749 | True             | False       | True  | 2     |
+| ISP.MI/RI.PA   | 1096 | 1.997146e-02  | -4.479026 | 0.967904| 1.599146| 6.341913  | True             | False       | True  | 2     |
+| INGA.AS/RI.PA  | 1096 | 4.263373e-02  | -7.076180 | 1.799475| 1.689437| 7.033190  | True             | False       | True  | 2     |
+
+
+**Selected top pair (trained on < 2023-01-01):** `ASML.AS / RI.PA`
+
+**Top 10 combos (After applying the greedy search algo, optimized through penalizing the sharpe, i.e. ):**
+| entry_z | exit_z | stop_loss_pct | take_profit_pct | z_window | use_rolling_z |  sharpe  | total_return_% | max_drawdown_% | trades |   score  |
+|---------|--------|---------------|-----------------|----------|---------------|----------|----------------|----------------|--------|----------|
+| 1.5     | 0.3    | 0.0           | 0.10            | 30       | True          | 0.187699 | 419.755219     | 14.040572      | 99     | 0.187699 |
+| 1.5     | 0.3    | 0.0           | 0.25            | 30       | True          | 0.184252 | 635.665250     | 15.481990      | 99     | 0.184252 |
+| 1.5     | 0.3    | 0.0           | 0.30            | 30       | True          | 0.184252 | 635.665250     | 15.481990      | 99     | 0.184252 |
+| 1.5     | 0.3    | 0.0           | 0.35            | 30       | True          | 0.184252 | 635.665250     | 15.481990      | 99     | 0.184252 |
+| 1.5     | 0.3    | 0.0           | 0.40            | 30       | True          | 0.184252 | 635.665250     | 15.481990      | 99     | 0.184252 |
+| 1.5     | 0.3    | 0.0           | 0.45            | 30       | True          | 0.184252 | 635.665250     | 15.481990      | 99     | 0.184252 |
+| 1.5     | 0.3    | 0.0           | 0.50            | 30       | True          | 0.184252 | 635.665250     | 15.481990      | 99     | 0.184252 |
+| 1.5     | 0.3    | 0.0           | 0.15            | 30       | True          | 0.181455 | 498.182972     | 18.253797      | 99     | 0.181455 |
+| 1.5     | 0.3    | 0.0           | 0.20            | 30       | True          | 0.180825 | 601.153321     | 15.659052      | 101    | 0.180825 |
+| 2.9     | 0.9    | 0.0           | 0.50            | 30       | True          | 0.178701 | 599.536235     |  8.713860      | 58     | 0.178701 |
+
+**Backtest summary (2023-01-01 to 2025-01-01):**
+Parameters: entry_z=2.4, exit_z=0.85, stop_loss_pct=0.05, take_profit_pct=0.45
+n_days: 730
+beta: -2.4599852876936037
+final_equity: 3.4553874371434485
+total_return_%: 245.53874371434486
+avg_daily_return: 0.0018861353445089066
+vol_daily_return: 0.019642077743972825
+sharpe_daily: 0.09602524585219313
+sharpe_annual: 1.5243535206524377
+max_drawdown_%: 25.35831813198639
+trades: 124
+n_trades: 57
+positive_trades: 33
+positive_trade_rate: 0.5789473684210527
+avg_trade_return_%: 2.4758416220991992
+std_trade_return_%: 6.087529201116813
+open_position: 0
+stops: {'stop_loss_pct': 0.05, 'take_profit_pct': 0.45, 'max_bars_in_trade': None}
 
 <p align="center">
-  <img src="images/short_explanation_example.png" alt="Trading Strategy Chart" width="500">
-  <br>
-  <em>Figure 2 – Shorting example</em>
+  <img src="images/ASML_RI_graph.png" width="720" alt="Positions & z-score">
 </p>
 
+**Top trades (net, incl. costs)**
+Top Winners
+| start      | end        | days | side                           | net_return_% |
+|------------|------------|------|--------------------------------|--------------|
+| 2023-08-31 | 2023-09-21 | 22   | SHORT ASML.AS / LONG RI.PA     | 57.110033    |
+| 2023-10-31 | 2023-11-03 | 4    | LONG ASML.AS / SHORT RI.PA     | 19.899154    |
+| 2024-01-03 | 2024-01-18 | 16   | SHORT ASML.AS / LONG RI.PA     | 17.582784    |
 
-2. How much would you invest in each pair?
+Top Losers
+| start      | end        | days | side                           | net_return_% |
+|------------|------------|------|--------------------------------|--------------|
+| 2024-10-14 | 2024-10-15 | 2    | LONG ASML.AS / SHORT RI.PA     | -16.614841   |
+| 2023-12-08 | 2023-12-14 | 7    | SHORT ASML.AS / LONG RI.PA     | -13.703934   |
+| 2024-05-23 | 2024-05-29 | 7    | LONG ASML.AS / SHORT RI.PA     | -10.465058   |
 
-In the first scenario: the one we needed to choose 1 pair from the combination of the 10 stocks, I'd use the Hedge Ratio.
+> **Note on β sign/magnitude:** Train vs. test can yield different β (e.g., 2.01 vs. −2.46) depending on window and regression direction. The logic uses \(s_t = A - βB\) consistently; long/short mapping adjusts automatically.
 
-If I had 10 000€ to invest (purely in stocks, assuming we have already optimized the missing money in Treasury Bonds thorugh the Markovitz optimzed curve) and assuming a Beta calculated in the statistics of 1.5 (when B moves 1€, A moves 1.5€ in the same direction), I'd go:
+---
 
-Long to A for instance instance with 4000€.
+## Strategy in 60 seconds
 
-Given the beta value B=1.5 * 4000€ = 6000€, having the total 10000€ invested, I'd invest 6000€ in the stock B. 
+1. **Hedge ratio (β):** OLS of A on B.  
+2. **Spread:** \( s_t = A_t - β B_t \).  
+3. **Z-score:** \( z_t = (s_t - \mu)/\sigma \) (rolling or full-sample).  
+4. **Enter:**  
+   - \( z \ge +\text{entry\_z} \) ⇒ **short A / long B**  
+   - \( z \le -\text{entry\_z} \) ⇒ **long A / short B**  
+5. **Exit:** when \( |z| \le \text{exit\_z} \) (**hysteresis** to reduce whipsaw).  
+6. **Risk:** per-trade **stop-loss**, **take-profit**, optional **time stop**.  
+7. **PnL:** \( \text{pos} \times (r_A - β r_B) - \text{costs} \). Each position change costs **2 legs**; a flip costs **4**. Default **5 bps/leg**.
 
-**Explanation:**
-
-We do this to avoid overexposing ourselves to a sole stock, therefore we invest accordint to the Beta Value multiplication over the second stock from the pair given the volatility of both not being the same.
-
-In the second model (the one which integrated fundamentals): As we are just allowed to select a pair from the 10 stocks I'd expose my-self 50-50. Altough we could also consider other methods such as Markovitz **(although prices from the past do not ensure repetition of behaviors in the feature)**.
-
-
-### ⚠️ Challenges & Solutions  
-
-- **Challenges found in this phase:** 
-
-1. It was my first time considering shorting scenarios. I'd be more confident if we could have a bit of more Technical and Fundamental Indicators, but as it's an assessment with limited time doesn't gives me the time enough to structure how to work with each indicator. 
-
-- **Solution implemented:**  
-1. Although I did not worked with lots of indicators I tried to show proficiency in alligning the ones I used together and show off a sound strategy.
+**Why it can work:** Cointegration suggests long-run linkage with **mean reversion**. Half-lives in **single-digit weeks** fit the horizon. Hysteresis cuts noise; costs/stops keep it realistic.
 
 
-## 5. Backtesting
-### Simulation
+## Project layout
 
-Implemented in the "build_strategy" function under main.py
-
-### Metrics
-p_value      alpha      beta    beta_cv  half_life  cointegration_ok  beta_stable  hl_ok
-1. p_value => Stocks which correlated the best have a smaller P_Value < 1 
-2. alpha => average offset when the P_a = P_b * Beta
-3. half_life => how many periods it takes for a deviation from the mean to shrink in a mean-reverting process
-4. cointegration_ok => If 2 stocks behave the same way
-5. beta_stable => If it's stable it is considered to bring "market neutral" status
-6. hl_ok => If it's ok, usually the "half_life" description happens
-7. net return
-
+BNP_BuildingPairTradingModel/
+├─ analysis/                      # pair selection & stats (cointegration, ranking, tuning)
+├─ data/                          # local cache (prices/meta) -> ignored in git
+│  └─ market/
+├─ delivery_one_backup/           # snapshot of previous assessment re-worked
+├─ images/                        # saved plots
+├─ indicators/                    # previous technical indicators
+│  ├─ ema.py
+│  └─ rsi.py
+├─ models/
+│  ├─ hedge.py                    # hedging
+│  ├─ stats.py                    # Auxiliary functions particularly used within models
+├─ strategies/                    # strategy interfaces & implementations
+│  ├─ base.py                     # abstract Strategy
+│  ├─ ema_rsi.py                  # EMA/RSI cross (separate from pairs)
+│  └─ zscore_only.py              # z-score pairs strategy (current)
+├─ utils/                         # helpers for I/O, plotting, reporting
+│  ├─ helpers.py
+│  ├─ io.py
+│  ├─ plotting.py
+│  └─ report.py
+├─ DataStructures.py              # Enterprise + TimePeriod + yfinance caching
+├─ main.py                        # wiring: load → rank → tune → backtest → report
+└─ README.md
