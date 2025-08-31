@@ -5,6 +5,7 @@ from dataclasses import dataclass, field
 from pathlib import Path
 import pandas as pd
 import yfinance as yf
+import time
 from datetime import date
 DATA_ROOT = Path("data/market")
 
