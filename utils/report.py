@@ -143,7 +143,7 @@ def grid_search_pairs_params(
             sharpe = st["sharpe_daily"]
             retpct = st["total_return_%"]
             ddpct  = st["max_drawdown_%"]
-            trades = st["trades"]
+            trades = st["number_of_position_changes"]
 
             if objective == "sharpe":
                 score = sharpe
@@ -159,7 +159,7 @@ def grid_search_pairs_params(
                 "stop_loss_pct": sl, "take_profit_pct": tp,
                 "z_window": z_window, "use_rolling_z": use_rolling_z,
                 "sharpe": sharpe, "total_return_%": retpct,
-                "max_drawdown_%": ddpct, "trades": trades,
+                "max_drawdown_%": ddpct, "number_of_position_changes": trades,
                 "score": score,
             })
 

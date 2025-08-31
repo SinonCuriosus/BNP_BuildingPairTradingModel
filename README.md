@@ -28,7 +28,7 @@ Mean-reversion **pairs trading** in equities with a clean OOP layout, **cointegr
 **Selected top pair (trained on < 2023-01-01):** `ASML.AS / RI.PA`
 
 **Top 10 combos (After applying the greedy search algo, optimized through penalizing the sharpe, i.e. ):**
-| entry_z | exit_z | stop_loss_pct | take_profit_pct | z_window | use_rolling_z |  sharpe  | total_return_% | max_drawdown_% | trades |   score  |
+| entry_z | exit_z | stop_loss_pct | take_profit_pct | z_window | use_rolling_z |  sharpe  | total_return_% | max_drawdown_% | number_of_position_changes |   score  |
 |---------|--------|---------------|-----------------|----------|---------------|----------|----------------|----------------|--------|----------|
 | 1.5     | 0.3    | 0.0           | 0.10            | 30       | True          | 0.187699 | 419.755219     | 14.040572      | 99     | 0.187699 |
 | 1.5     | 0.3    | 0.0           | 0.25            | 30       | True          | 0.184252 | 635.665250     | 15.481990      | 99     | 0.184252 |
