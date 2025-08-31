@@ -28,7 +28,7 @@ Mean-reversion **pairs trading** in equities with a clean OOP layout, **cointegr
 **Selected top pair (trained on < 2023-01-01):** `ASML.AS / RI.PA`
 
 **Top 10 combos (After applying the greedy search algo, optimized through penalizing the sharpe, i.e. ):**
-| entry_z | exit_z | stop_loss_pct | take_profit_pct | z_window | use_rolling_z |  sharpe  | total_return_% | max_drawdown_% | number_of_position_changes |   score  |
+| entry_z | exit_z | stop_loss_pct | take_profit_pct | z_window | use_rolling_z |  sharpe  | total_return_% | max_drawdown_% | trades |   score  |
 |---------|--------|---------------|-----------------|----------|---------------|----------|----------------|----------------|--------|----------|
 | 1.5     | 0.3    | 0.0           | 0.10            | 30       | True          | 0.187699 | 419.755219     | 14.040572      | 99     | 0.187699 |
 | 1.5     | 0.3    | 0.0           | 0.25            | 30       | True          | 0.184252 | 635.665250     | 15.481990      | 99     | 0.184252 |
@@ -65,13 +65,13 @@ Results:
 | sharpe_daily          | 0.0960     |
 | sharpe_annual         | 1.524      |
 | max_drawdown_%        | 25.36      |
-| trades                | 124        |
+| number_of_position_changes | 124   |
 | n_trades              | 57         |
 | positive_trades       | 33         |
 | positive_trade_rate   | 0.579      |
 | avg_trade_return_%    | 2.476      |
 | std_trade_return_%    | 6.088      |
-| open_position         | 0          |
+| open_position         | 10         |
 | stops                 | {'stop_loss_pct': 0.05, 'take_profit_pct': 0.45, 'max_bars_in_trade': None} |
 
 <p align="center">
