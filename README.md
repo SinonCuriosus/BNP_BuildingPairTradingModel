@@ -7,7 +7,7 @@ Mean-reversion **pairs trading** in equities with a clean OOP layout, **cointegr
 ## TL;DR (current features)
 
 - **Pair selection:** Engle–Granger cointegration, OLS hedge ratio (β), half-life, β-stability; rank candidates.
-- **Strategy (current):** **Z-score** entry/exit (no EMA gate yet).
+- **Strategy (current):** **Z-score** entry/exit.
 - **Risk:** **stop-loss**, **take-profit**, optional **time stop**, **transaction costs** (default **5 bps per leg**).
 - **Backtest stats:** daily & annual **Sharpe**, **max drawdown**, closed-trade win rate, avg/std trade return, top 3 wins/losses.
 
@@ -42,24 +42,33 @@ Mean-reversion **pairs trading** in equities with a clean OOP layout, **cointegr
 | 2.9     | 0.9    | 0.0           | 0.50            | 30       | True          | 0.178701 | 599.536235     |  8.713860      | 58     | 0.178701 |
 
 **Backtest summary (2023-01-01 to 2025-01-01):**
-Parameters: entry_z=2.4, exit_z=0.85, stop_loss_pct=0.05, take_profit_pct=0.45
-n_days: 730
-beta: -2.4599852876936037
-final_equity: 3.4553874371434485
-total_return_%: 245.53874371434486
-avg_daily_return: 0.0018861353445089066
-vol_daily_return: 0.019642077743972825
-sharpe_daily: 0.09602524585219313
-sharpe_annual: 1.5243535206524377
-max_drawdown_%: 25.35831813198639
-trades: 124
-n_trades: 57
-positive_trades: 33
-positive_trade_rate: 0.5789473684210527
-avg_trade_return_%: 2.4758416220991992
-std_trade_return_%: 6.087529201116813
-open_position: 0
-stops: {'stop_loss_pct': 0.05, 'take_profit_pct': 0.45, 'max_bars_in_trade': None}
+With:
+| Parameter       | Value |
+|-----------------|-------|
+| entry_z         | 2.4   |
+| exit_z          | 0.85  |
+| stop_loss_pct   | 0.05  |
+| take_profit_pct | 0.45  |
+Results:
+| Metric                | Value      |
+|------------------------|------------|
+| n_days                | 730        |
+| beta                  | -2.460     |
+| final_equity          | 3.455      |
+| total_return_%        | 245.54     |
+| avg_daily_return      | 0.001886   |
+| vol_daily_return      | 0.019642   |
+| sharpe_daily          | 0.0960     |
+| sharpe_annual         | 1.524      |
+| max_drawdown_%        | 25.36      |
+| trades                | 124        |
+| n_trades              | 57         |
+| positive_trades       | 33         |
+| positive_trade_rate   | 0.579      |
+| avg_trade_return_%    | 2.476      |
+| std_trade_return_%    | 6.088      |
+| open_position         | 0          |
+| stops                 | {'stop_loss_pct': 0.05, 'take_profit_pct': 0.45, 'max_bars_in_trade': None} |
 
 <p align="center">
   <img src="images/ASML_RI_graph.png" width="720" alt="Positions & z-score">
@@ -100,10 +109,9 @@ Top Losers
 
 
 ## Project layout
-
 BNP_BuildingPairTradingModel/
 ├─ analysis/                      # pair selection & stats (cointegration, ranking, tuning)
-├─ data/                          # local cache (prices/meta) -> ignored in git
+├─ data/                          # local cache (prices/meta) → ignored in git
 │  └─ market/
 ├─ delivery_one_backup/           # snapshot of previous assessment re-worked
 ├─ images/                        # saved plots
@@ -112,7 +120,7 @@ BNP_BuildingPairTradingModel/
 │  └─ rsi.py
 ├─ models/
 │  ├─ hedge.py                    # hedging
-│  ├─ stats.py                    # Auxiliary functions particularly used within models
+│  └─ stats.py                    # auxiliary functions used in models
 ├─ strategies/                    # strategy interfaces & implementations
 │  ├─ base.py                     # abstract Strategy
 │  ├─ ema_rsi.py                  # EMA/RSI cross (separate from pairs)
