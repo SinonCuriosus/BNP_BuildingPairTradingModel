@@ -78,6 +78,28 @@ Results:
   <img src="images/ASML_RI_graph.png" width="720" alt="Positions & z-score">
 </p>
 
+### How to read the “positions & z-score” plot
+
+- **Left y-axis**
+  - **Blue solid**: `ASML.AS` (normalized near 1.0 at the start)
+  - **Orange solid**: `RI.PA` (normalized)
+
+- **Right y-axis i.e. spread** `s_t = A_t − β B_t`
+  - **Thin light-blue line**: z-score, oscillating around **0**
+
+- **Horizontal reference lines (z-score axis)**
+  - **Dashed**: **entry thresholds**
+    - `z ≥ +entry_z` ⇒ **short A / long B**  
+    - `z ≤ -entry_z` ⇒ **long A / short B** 
+  - **Dotted** at `|z| ≤ exit_z`: **exit thresholds**
+  > Note: These lines are referenced to the **right** axis, not the left.
+
+- **Vertical shading (position state)**
+  - **Green bands**: **long the pair** \((+1)\) → long `ASML.AS` / short `RI.PA`
+  - **Red bands**: **short the pair** \((-1)\) → short `ASML.AS` / long `RI.PA`
+  - No shading: **flat** (no position)
+
+
 **Top trades (net, incl. costs)**
 Top Winners
 | start      | end        | days | side                           | net_return_% |
