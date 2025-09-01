@@ -68,7 +68,7 @@ Results:
 | number_of_position_changes | 124   |
 | n_trades              | 57         |
 | positive_trades       | 33         |
-| positive_trade_rate   | 0.579      |
+| positive_trade_rate   | 57.9 %     |
 | avg_trade_return_%    | 2.476      |
 | std_trade_return_%    | 6.088      |
 | open_position         | 10         |
